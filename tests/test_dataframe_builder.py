@@ -51,8 +51,8 @@ class TestDataFrameBuilder(unittest.TestCase):
         stats_df = column_statistics(df)
         self.assertIn("A", stats_df.index)
         self.assertIn("B", stats_df.index)
-        self.assertIn("C", stats_df.index)  # All missing, but still numeric, should be included
-        self.assertNotIn("D", stats_df.index)  # Non-numeric column should be excluded
+        self.assertIn("C", stats_df.index) 
+        self.assertNotIn("D", stats_df.index)
         self.assertAlmostEqual(stats_df.loc["A", "mean"], 2.0)
         self.assertEqual(stats_df.loc["A", "missing_count"], 1)
         self.assertEqual(stats_df.loc["B", "missing_count"], 1)
