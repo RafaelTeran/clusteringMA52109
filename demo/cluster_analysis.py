@@ -51,8 +51,9 @@ def main(args: list[str]) -> None:
         print(f"Numeric columns found: {numeric_cols}")
         sys.exit(1)
 
-    # Take the first two numeric columns
-    feature_cols = numeric_cols[:2]
+# We will not need this because of PCA.
+    # # Take the first two numeric columns
+    feature_cols = numeric_cols#[:2]
     print(f"Chosen numeric feature columns for clustering: {feature_cols}")
     print("-" * 60)
 
@@ -77,6 +78,7 @@ def main(args: list[str]) -> None:
         output_path=os.path.join(OUTPUT_DIR, "clustered_data.csv"),
         random_state=42,
         compute_elbow=True,
+        use_pca=True,  # NEW: apply PCA before clustering
     )
 
     print("\nClustering completed.")
