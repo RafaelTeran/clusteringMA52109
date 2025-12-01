@@ -29,7 +29,7 @@ def run_clustering(
     random_state: Optional[int] = None,
     compute_elbow: bool = False,
     elbow_k_values: Optional[List[int]] = None,
-    use_pca: bool = False
+    use_pca: bool = True
 ) -> Dict[str, Any]:
     """
     High-level function to run the full clustering workflow.
@@ -90,6 +90,8 @@ def run_clustering(
         X_temp_df = pd.DataFrame(X, columns=X_df.columns)
         X_pca_df = apply_pca(X_temp_df, n_components=2)
         X = X_pca_df.to_numpy(dtype=float)
+        x_label_pca = "PC1"
+        y_label_pca = "PC2"
 
     # Run clustering
     if algorithm == "kmeans":
@@ -118,7 +120,9 @@ def run_clustering(
         export_to_csv(df, output_path, delimiter=",", include_index=False)
 
     # Plot clusters (2D)
-    fig_cluster, _ = plot_clusters_2d(X, labels, centroids=centroids, title="Cluster plot")
+    fig_cluster, _ = plot_clusters_2d(X, labels, centroids=centroids, title="Cluster plot",
+                                      x_label=(x_label_pca if use_pca else "Feature 1"),
+                                      y_label=(y_label_pca if use_pca else "Feature 2"))
 
     # Optional elbow curve
     fig_elbow = None
